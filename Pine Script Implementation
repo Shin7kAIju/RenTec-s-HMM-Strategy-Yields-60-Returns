@@ -1,0 +1,26 @@
+//@version=5
+strategy("HMM + Time Filter Strategy", overlay=true)
+
+// 1. Time Filter (9:30 AM – 10:30 AM ET)
+ny_session = time(timeframe.period, "0930-1030", "America/New_York")
+
+// 2. Simplified Regime Detection (SMA/Volatility Proxy)
+sma50 = ta.sma(close, 50)
+sma200 = ta.sma(close, 200)
+bull_regime = close > sma200 and sma50 > sma200
+bear_regime = close < sma200 and sma50 < sma200
+
+// 3. Entry/Exit Rules
+if ny_session and bull_regime
+    strategy.entry("Long", strategy.long)
+if ny_session and bear_regime
+    strategy.entry("Short", strategy.short)
+
+// Close positions at 10:30 AM ET
+if not ny_session and strategy.position_size != 0
+    strategy.close_all()
+
+// Plotting
+plot(sma50, color=color.orange)
+plot(sma200, color=color.blue)
+bgcolor(ny_session ? color.green : na, transp=90)
