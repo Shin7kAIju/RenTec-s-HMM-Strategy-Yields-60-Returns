@@ -1,9 +1,3 @@
-# ai-agent-deepseek
-agentic ai for algorithmic trading with advance strategies
-Sure! Here's a `README.md` for your GitHub repository:
-
----
-
 # E-mini S&P 500 Futures Trading Strategy
 
 This repository contains a trading strategy for E-mini S&P 500 (ES) futures, combining Hidden Markov Model (HMM) regime detection with time-based filters to trade during high-volume and high-momentum windows.
